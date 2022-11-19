@@ -3,8 +3,8 @@ import "../index.css";
 import Header from "./header/Header.js";
 import Main from "./main/Main.js";
 import Footer from "./footer/Footer.js";
-import PopupWithForm from "./PopupWithForm";
-
+import PopupWithForm from "./PopupWithForm.js";
+import ImagePopup from "./ImagePopup.js";
 function App() {
 	return (
 		<div className="page__content">
@@ -131,13 +131,7 @@ function App() {
 				popupContent="popup__container_content_edit-avatar"
 			/>
 
-			<article className="popup popup_type_zoom-img">
-				<div className="popup__container popup__container_content_image">
-					<img className="popup__img" src="#" alt="" />
-					<p className="popup__img-desc" />
-					<button type="reset" className="popup__close-btn" />
-				</div>
-			</article>
+			<ImagePopup />
 		</div>
 	);
 }
