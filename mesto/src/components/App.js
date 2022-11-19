@@ -1,95 +1,19 @@
 import React from "react";
-import "./index.css";
+import "../index.css";
+import Header from "./header/Header.js";
+import Main from "./main/Main.js";
+import Footer from "./footer/Footer.js";
+import PopupWithForm from "./PopupWithForm";
 
 function App() {
 	return (
 		<div className="page__content">
-			<header className="header section section_size_narrow page__header">
-				<a href="#" className="logo">
-					<img
-						src="<%=require('./images/logo/logo.svg')%>"
-						alt="Место - Россия"
-						className="logo__icon"
-					/>
-				</a>
-			</header>
-			<main className="content section">
-				<section
-					className="profile section section_size_narrow page__section"
-					aria-label="Секция профиль пользователя"
-				>
-					<div className="profile__avatar-wrapper">
-						<img
-							src="<%=require('./images/avatars/avatar-01.jpg')%>"
-							alt="аватарка"
-							className="profile__avatar"
-						/>
-						<div className="profile__avatar-overlay">
-							<button type="button" className="profile__avatar-btn" />
-						</div>
-					</div>
-					<div className="profile__info">
-						<div className="profile__name-wrapper">
-							<h1 className="profile__name" />
-							<button type="button" className="profile__edit-btn" />
-						</div>
-						<p className="profile__desc" />
-					</div>
-					<button type="button" className="profile__add-btn" />
-				</section>
-				<section
-					className="cards-layout section section_size_narrow page__section"
-					aria-label="Блок с фотокарточками"
-				></section>
-			</main>
-			<footer className="footer page__footer section section_size_narrow">
-				<p className="footer__copyright">© 2022 Mesto Russia</p>
-			</footer>
-			<article className="popup popup_type_edit-profile">
-				<div className="popup__container">
-					<h2 className="popup__title">Редактировать профиль</h2>
-					<form name="edit-form" className="popup__form">
-						<fieldset className="popup__input-group">
-							<input
-								id="name-input"
-								type="text"
-								name="name"
-								className="popup__input popup__input_type_name"
-								placeholder="Ваше Имя"
-								defaultValue=""
-								minLength={2}
-								maxLength={40}
-								required=""
-							/>
-							<span
-								id="name-input-error"
-								className="name-input-error popup__input-error"
-							/>
-						</fieldset>
-						<fieldset className="popup__input-group">
-							<input
-								id="prof-input"
-								type="text"
-								name="about"
-								className="popup__input popup__input_type_profession"
-								placeholder="Ваша профессия"
-								defaultValue=""
-								minLength={2}
-								maxLength={200}
-								required=""
-							/>
-							<span
-								id="prof-input-error"
-								className="prof-input-error popup__input-error"
-							/>
-						</fieldset>
-						<button type="submit" className="popup__submit-btn">
-							Сохранить
-						</button>
-					</form>
-					<button type="reset" className="popup__close-btn" />
-				</div>
-			</article>
+			<Header />
+			<Main />
+			<Footer />
+
+			<PopupWithForm name="edit-profile" title="Редактировать профиль" />
+
 			<article className="popup popup_type_add-card">
 				<div className="popup__container">
 					<h2 className="popup__title">Новое место</h2>
@@ -134,6 +58,7 @@ function App() {
 					<button type="reset" className="popup__close-btn" />
 				</div>
 			</article>
+
 			<article className="popup popup_type_confirmation">
 				<div className="popup__container popup__container_content_confirmation">
 					<h2 className="popup__title">Вы уверены?</h2>
@@ -145,6 +70,7 @@ function App() {
 					<button type="reset" className="popup__close-btn" />
 				</div>
 			</article>
+
 			<article className="popup popup_type_edit-avatar">
 				<div className="popup__container popup__container_content_edit-avatar">
 					<h2 className="popup__title">Обновить аватар</h2>
@@ -172,6 +98,7 @@ function App() {
 					<button type="reset" className="popup__close-btn" />
 				</div>
 			</article>
+
 			<article className="popup popup_type_zoom-img">
 				<div className="popup__container popup__container_content_image">
 					<img className="popup__img" src="#" alt="" />
