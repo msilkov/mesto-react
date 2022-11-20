@@ -1,10 +1,10 @@
-export default function Card(props, { card }) {
-	function handleClick() {
-		props.onCardClick(props.card);
-	}
+export default function Card({ card }) {
+	// function handleClick() {
+	// 	props.onCardClick(props.card);
+	// }
 
 	return (
-		<article className="card" onClick={handleClick}>
+		<article className="card">
 			<img src={card.link} alt="img" className="card__image" />
 			<div className="card__description">
 				<h2 className="card__title">{card.name}</h2>

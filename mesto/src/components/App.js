@@ -13,13 +13,13 @@ function App() {
 
 	const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
 
-	const [selectedCard, setSelectedCard] = React.useState();
+	// const [selectedCard, setSelectedCard] = React.useState();
 
 	function closeAllPopups() {
 		setEditProfilePopupOpen(false);
 		setAddPlacePopupOpen(false);
 		setEditAvatarPopupOpen(false);
-		setSelectedCard(false);
+		// setSelectedCard(false);
 	}
 
 	function handleEditProfileClick() {
@@ -33,9 +33,9 @@ function App() {
 	function handleEditAvatarClick() {
 		setEditAvatarPopupOpen(!isEditAvatarPopupOpen);
 	}
-	function handleCardClick() {
-		setSelectedCard(true);
-	}
+	// function handleCardClick() {
+	// 	setSelectedCard(true);
+	// }
 	return (
 		<div className="page__content">
 			<Header />
@@ -43,7 +43,6 @@ function App() {
 				onEditProfile={handleEditProfileClick}
 				onAddPlace={handleAddPlaceClick}
 				onEditAvatar={handleEditAvatarClick}
-				onCardClick={handleCardClick}
 			/>
 			<Footer />
 
@@ -173,7 +172,7 @@ function App() {
 				onClose={closeAllPopups}
 			/>
 
-			<ImagePopup card={selectedCard} onClose={closeAllPopups} />
+			<ImagePopup  onClose={closeAllPopups} />
 		</div>
 	);
 }
