@@ -59,7 +59,7 @@ export default function Main(props) {
 				aria-label="Блок с фотокарточками"
 			>
 				{cards.map((card) => (
-					<Card card={card} />
+					<Card onClick={props.onCardClick} card={card} />
 				))}
 			</section>
 		</main>
