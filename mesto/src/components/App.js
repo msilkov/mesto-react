@@ -6,10 +6,38 @@ import Footer from "./footer/Footer.js";
 import PopupWithForm from "./PopupWithForm.js";
 import ImagePopup from "./ImagePopup.js";
 function App() {
+	const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
+		React.useState(false);
+
+	const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
+
+	const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+
+	function closeAllPopups() {
+		setEditProfilePopupOpen(false);
+		setAddPlacePopupOpen(false);
+		setEditAvatarPopupOpen(false);
+	}
+
+	function handleEditProfileClick() {
+		setEditProfilePopupOpen(!isEditProfilePopupOpen);
+	}
+
+	function handleAddPlaceClick() {
+		setAddPlacePopupOpen(!isAddPlacePopupOpen);
+	}
+
+	function handleEditAvatarClick() {
+		setEditAvatarPopupOpen(!isEditAvatarPopupOpen);
+	}
 	return (
 		<div className="page__content">
 			<Header />
-			<Main />
+			<Main
+				onEditProfile={handleEditProfileClick}
+				onAddPlace={handleAddPlaceClick}
+				onEditAvatar={handleEditAvatarClick}
+			/>
 			<Footer />
 
 			<PopupWithForm
@@ -53,6 +81,8 @@ function App() {
 					</React.Fragment>
 				}
 				button="Сохранить"
+				isOpen={isEditProfilePopupOpen}
+				onClose={closeAllPopups}
 			/>
 
 			<PopupWithForm
@@ -96,12 +126,15 @@ function App() {
 					</React.Fragment>
 				}
 				button="Создать"
+				isOpen={isAddPlacePopupOpen}
+				onClose={closeAllPopups}
 			/>
 			<PopupWithForm
 				name="confirmation"
 				title="Вы уверены?"
 				button="Да"
 				popupContent="popup__container_content_confirmation"
+				onClose={closeAllPopups}
 			/>
 
 			<PopupWithForm
@@ -129,6 +162,8 @@ function App() {
 				}
 				button="Сохранить"
 				popupContent="popup__container_content_edit-avatar"
+				isOpen={isEditAvatarPopupOpen}
+				onClose={closeAllPopups}
 			/>
 
 			<ImagePopup />

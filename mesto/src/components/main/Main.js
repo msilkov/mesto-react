@@ -1,21 +1,4 @@
-export default function Main() {
-	function handleEditAvatarClick() {
-		const popupEditAvatar = document.querySelector(".popup_type_edit-avatar");
-		popupEditAvatar.classList.add("popup_opened");
-
-		console.log("ava");
-	}
-	function handleEditProfileClick() {
-		const popupEditProfile = document.querySelector(".popup_type_edit-profile");
-		popupEditProfile.classList.add("popup_opened");
-	}
-
-	function handleAddPlaceClick() {
-		const popupAddCard = document.querySelector(".popup_type_add-card");
-		popupAddCard.classList.add("popup_opened");
-
-		console.log("place card");
-	}
+export default function Main(props) {
 	return (
 		<main className="content section">
 			<section
@@ -32,7 +15,7 @@ export default function Main() {
 						<button
 							type="button"
 							className="profile__avatar-btn"
-							onClick={handleEditAvatarClick}
+							onClick={props.onEditAvatar}
 						/>
 					</div>
 				</div>
@@ -42,7 +25,7 @@ export default function Main() {
 						<button
 							type="button"
 							className="profile__edit-btn"
-							onClick={handleEditProfileClick}
+							onClick={props.onEditProfile}
 						/>
 					</div>
 					<p className="profile__desc" />
@@ -50,7 +33,7 @@ export default function Main() {
 				<button
 					type="button"
 					className="profile__add-btn"
-					onClick={handleAddPlaceClick}
+					onClick={props.onAddPlace}
 				/>
 			</section>
 			<section

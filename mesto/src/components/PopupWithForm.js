@@ -1,6 +1,10 @@
 export default function PopupWithForm(props) {
 	return (
-		<article className={`popup popup_type_${props.name}`}>
+		<article
+			className={`popup popup_type_${props.name} ${
+				props.isOpen ? "popup_opened" : ""
+			}`}
+		>
 			<div className={`popup__container ${props.popupContent}`}>
 				<h2 className="popup__title">{props.title}</h2>
 				<form name={props.name} className="popup__form">
@@ -9,7 +13,7 @@ export default function PopupWithForm(props) {
 						{props.button}
 					</button>
 				</form>
-				<button type="reset" className="popup__close-btn" />
+				<button onClick={props.onClose} type="reset" className="popup__close-btn" />
 			</div>
 		</article>
 	);
