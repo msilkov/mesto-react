@@ -1,4 +1,5 @@
-export default class Api {
+import { baseUrl, token } from "./utils.js";
+class Api {
 	constructor({ baseUrl, headers }) {
 		this._baseUrl = baseUrl;
 		this._headers = headers;
@@ -68,3 +69,13 @@ export default class Api {
 		});
 	}
 }
+
+const reactApi = new Api({
+	baseUrl: baseUrl,
+	headers: {
+		authorization: token,
+		"Content-Type": "application/json",
+	},
+});
+
+export default reactApi;
