@@ -5,6 +5,9 @@ import Main from "./main/Main.js";
 import Footer from "./footer/Footer.js";
 import PopupWithForm from "./PopupWithForm.js";
 import ImagePopup from "./ImagePopup.js";
+import InputText from "./InputText.js";
+import InputLink from "./InputLink.js";
+
 function App() {
 	const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
 		React.useState(false);
@@ -50,92 +53,25 @@ function App() {
 			<PopupWithForm
 				name="edit-profile"
 				title="Редактировать профиль"
-				children={
-					<React.Fragment>
-						<fieldset className="popup__input-group">
-							<input
-								id="place-input"
-								type="text"
-								name="name"
-								className="popup__input popup__input_type_img-title"
-								placeholder="Название"
-								defaultValue=""
-								minLength={2}
-								maxLength={30}
-								required=""
-							/>
-							<span
-								id="place-input-error"
-								className="place-input-error popup__input-error"
-							/>
-						</fieldset>
-						<fieldset className="popup__input-group">
-							<input
-								id="img-input"
-								type="text"
-								name="link"
-								className="popup__input popup__input_type_img-link"
-								placeholder="Ссылка на картинку"
-								defaultValue=""
-								pattern="https?://.+"
-								required=""
-							/>
-							<span
-								id="img-input-error"
-								className="img-input-error popup__input-error"
-							/>
-						</fieldset>
-					</React.Fragment>
-				}
 				button="Сохранить"
 				isOpen={isEditProfilePopupOpen}
 				onClose={closeAllPopups}
-			/>
+			>
+				<InputText placeholder="Ваше имя" />
+				<InputText placeholder="Чем вы занимаетесь?" />
+			</PopupWithForm>
 
 			<PopupWithForm
 				name="add-card"
 				title="Новое место"
-				children={
-					<React.Fragment>
-						<fieldset className="popup__input-group">
-							<input
-								id="place-input"
-								type="text"
-								name="name"
-								className="popup__input popup__input_type_img-title"
-								placeholder="Название"
-								defaultValue=""
-								minLength={2}
-								maxLength={30}
-								required=""
-							/>
-							<span
-								id="place-input-error"
-								className="place-input-error popup__input-error"
-							/>
-						</fieldset>
-						<fieldset className="popup__input-group">
-							<input
-								id="img-input"
-								type="text"
-								name="link"
-								className="popup__input popup__input_type_img-link"
-								placeholder="Ссылка на картинку"
-								defaultValue=""
-								pattern="https?://.+"
-								required=""
-							/>
-							<span
-								id="img-input-error"
-								className="img-input-error popup__input-error"
-							/>
-						</fieldset>
-					</React.Fragment>
-				}
 				button="Создать"
 				isOpen={isAddPlacePopupOpen}
 				onClose={closeAllPopups}
-			/>
+			>
+				{" "}
+				<InputText placeholder="Описание места" />
+				<InputLink placeholder="Ссылка на картинку" />
+			</PopupWithForm>
 			<PopupWithForm
 				name="confirmation"
 				title="Вы уверены?"
@@ -147,31 +83,14 @@ function App() {
 			<PopupWithForm
 				name="edit-avatar"
 				title="Обновить аватар"
-				children={
-					<React.Fragment>
-						<fieldset className="popup__input-group">
-							<input
-								id="owner-avatar"
-								type="url"
-								name="avatar"
-								className="popup__input popup__input_type_img-link"
-								placeholder="Ссылка на картинку"
-								defaultValue=""
-								pattern="https?://.+"
-								required=""
-							/>
-							<span
-								id="owner-avatar-error"
-								className="img-input-error popup__input-error"
-							/>
-						</fieldset>
-					</React.Fragment>
-				}
 				button="Сохранить"
 				popupContent="popup__container_content_edit-avatar"
 				isOpen={isEditAvatarPopupOpen}
 				onClose={closeAllPopups}
-			/>
+			>
+				{" "}
+				<InputLink placeholder="Ссылка на картинку" />{" "}
+			</PopupWithForm>
 
 			<ImagePopup card={false} onClose={closeAllPopups} />
 		</div>

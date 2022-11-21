@@ -1,14 +1,14 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import reactApi from "../../utils/api.js";
 import Card from "../Card.js";
 
 export default function Main(props) {
-	const [userName, setUserName] = React.useState("");
-	const [userDescription, setUserDescription] = React.useState("");
-	const [userAvatar, setUserAvatar] = React.useState("");
-	const [cards, setCards] = React.useState([]);
+	const [userName, setUserName] = useState("");
+	const [userDescription, setUserDescription] = useState("");
+	const [userAvatar, setUserAvatar] = useState("");
+	const [cards, setCards] = useState([]);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		Promise.all([reactApi.getCards(), reactApi.getUserInfo()])
 			.then(([cards, { name, about, avatar, _id }]) => {
 				setCards(cards);
@@ -19,7 +19,7 @@ export default function Main(props) {
 			.catch((err) => {
 				console.log(`Ошибка при загрузке данных с сервера: ${err}`);
 			});
-	});
+	}, []);
 
 	return (
 		<main className="content section">
@@ -59,7 +59,7 @@ export default function Main(props) {
 				aria-label="Блок с фотокарточками"
 			>
 				{cards.map((card) => (
-					<Card onClick={props.onCardClick} card={card} />
+					<Card key={card._id} onClick={props.onCardClick} card={card} />
 				))}
 			</section>
 		</main>
