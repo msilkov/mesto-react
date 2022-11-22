@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import "../index.css";
 import Header from "./header/Header.js";
 import Main from "./main/Main.js";
@@ -10,19 +10,19 @@ import InputLink from "./InputLink.js";
 
 function App() {
 	const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
-		React.useState(false);
+		useState(false);
 
-	const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
+	const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
 
-	const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+	const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
 
-	// const [selectedCard, setSelectedCard] = React.useState(null);
+	const [selectedCard, setSelectedCard] = useState(null);
 
 	function closeAllPopups() {
 		setEditProfilePopupOpen(false);
 		setAddPlacePopupOpen(false);
 		setEditAvatarPopupOpen(false);
-		// setSelectedCard(false);
+		setSelectedCard(false);
 	}
 
 	function handleEditProfileClick() {
@@ -37,7 +37,7 @@ function App() {
 		setEditAvatarPopupOpen(!isEditAvatarPopupOpen);
 	}
 	function handleCardClick() {
-		// setSelectedCard(true);
+		setSelectedCard(true);
 	}
 	return (
 		<div className="page__content">
@@ -46,7 +46,7 @@ function App() {
 				onEditProfile={handleEditProfileClick}
 				onAddPlace={handleAddPlaceClick}
 				onEditAvatar={handleEditAvatarClick}
-				// onCardClick={handleCardClick}
+				onCardClick={handleCardClick}
 			/>
 			<Footer />
 
@@ -92,7 +92,7 @@ function App() {
 				<InputLink placeholder="Ссылка на картинку" />{" "}
 			</PopupWithForm>
 
-			<ImagePopup card={false} onClose={closeAllPopups} />
+			<ImagePopup card={selectedCard} onClose={closeAllPopups} />
 		</div>
 	);
 }

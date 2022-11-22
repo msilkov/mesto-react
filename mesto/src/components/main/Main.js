@@ -11,7 +11,15 @@ export default function Main(props) {
 	useEffect(() => {
 		Promise.all([reactApi.getCards(), reactApi.getUserInfo()])
 			.then(([cards, { name, about, avatar, _id }]) => {
-				setCards(cards);
+				setCards(
+					cards.map((card) => ({
+						id: card._id,
+						likes: card.likes,
+						name: card.name,
+						link: card.link,
+						ownerId: card.owner._id,
+					}))
+				);
 				setUserName(name);
 				setUserDescription(about);
 				setUserAvatar(avatar);
@@ -58,8 +66,8 @@ export default function Main(props) {
 				className="cards-layout section section_size_narrow page__section"
 				aria-label="Блок с фотокарточками"
 			>
-				{cards.map((card) => (
-					<Card key={card._id} onClick={props.onCardClick} card={card} />
+				{cards.map(({ id, ...card }) => (
+					<Card key={id} {...card} onClick={props.onCardClick} />
 				))}
 			</section>
 		</main>
