@@ -35,8 +35,8 @@ function App() {
 	function handleEditAvatarClick() {
 		setEditAvatarPopupOpen(!isEditAvatarPopupOpen);
 	}
-	function handleCardClick() {
-		setSelectedCard(true);
+	function handleCardClick(selectedCard) {
+		setSelectedCard(selectedCard);
 	}
 	return (
 		<div className="page__content">

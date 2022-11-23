@@ -66,8 +66,8 @@ export default function Main(props) {
 				className="cards-layout section section_size_narrow page__section"
 				aria-label="Блок с фотокарточками"
 			>
-				{cards.map(({ id, ...card }) => (
-					<Card key={id} {...card} onClick={props.onCardClick} />
+				{cards.map((card) => (
+					<Card key={card.id} card={card} onClick={props.onCardClick} />
 				))}
 			</section>
 		</main>
