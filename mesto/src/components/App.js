@@ -9,8 +9,7 @@ import InputText from "./InputText.js";
 import InputLink from "./InputLink.js";
 
 function App() {
-	const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
-		useState(false);
+	const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
 
 	const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
 
@@ -22,7 +21,7 @@ function App() {
 		setEditProfilePopupOpen(false);
 		setAddPlacePopupOpen(false);
 		setEditAvatarPopupOpen(false);
-		setSelectedCard(false);
+		setSelectedCard(null);
 	}
 
 	function handleEditProfileClick() {
