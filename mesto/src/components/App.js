@@ -7,6 +7,8 @@ import PopupWithForm from "./PopupWithForm.js";
 import ImagePopup from "./ImagePopup.js";
 import InputText from "./InputText.js";
 import InputLink from "./InputLink.js";
+import api from "../utils/api.js";
+import { userContext } from "./contexts/CurrentUserContext";
 
 function App() {
 	const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -17,7 +19,18 @@ function App() {
 
 	const [selectedCard, setSelectedCard] = useState(null);
 
-	const [currentUser, setcurrentUser] = useState(null);
+	const [currentUser, setCurrentUser] = useState({});
+
+	useEffect(() => {
+		api
+			.getUserInfo()
+			.then((userData) => {
+				setCurrentUser(userData);
+			})
+			.catch((err) => {
+				console.log(`Ошибка при загрузке данных с сервера: ${err}`);
+			});
+	}, []);
 
 	function closeAllPopups() {
 		setEditProfilePopupOpen(false);
@@ -41,60 +54,62 @@ function App() {
 		setSelectedCard(selectedCard);
 	}
 	return (
-		<div className="page__content">
-			<Header />
-			<Main
-				onEditProfile={handleEditProfileClick}
-				onAddPlace={handleAddPlaceClick}
-				onEditAvatar={handleEditAvatarClick}
-				onCardClick={handleCardClick}
-			/>
-			<Footer />
+		<userContext.Provider value={currentUser}>
+			<div className="page__content">
+				<Header />
+				<Main
+					onEditProfile={handleEditProfileClick}
+					onAddPlace={handleAddPlaceClick}
+					onEditAvatar={handleEditAvatarClick}
+					onCardClick={handleCardClick}
+				/>
+				<Footer />
 
-			<PopupWithForm
-				name="edit-profile"
-				title="Редактировать профиль"
-				button="Сохранить"
-				isOpen={isEditProfilePopupOpen}
-				onClose={closeAllPopups}
-			>
-				<InputText placeholder="Ваше имя" />
-				<InputText placeholder="Чем вы занимаетесь?" />
-			</PopupWithForm>
+				<PopupWithForm
+					name="edit-profile"
+					title="Редактировать профиль"
+					button="Сохранить"
+					isOpen={isEditProfilePopupOpen}
+					onClose={closeAllPopups}
+				>
+					<InputText placeholder="Ваше имя" />
+					<InputText placeholder="Чем вы занимаетесь?" />
+				</PopupWithForm>
 
-			<PopupWithForm
-				name="add-card"
-				title="Новое место"
-				button="Создать"
-				isOpen={isAddPlacePopupOpen}
-				onClose={closeAllPopups}
-			>
-				{" "}
-				<InputText placeholder="Описание места" />
-				<InputLink placeholder="Ссылка на картинку" />
-			</PopupWithForm>
-			<PopupWithForm
-				name="confirmation"
-				title="Вы уверены?"
-				button="Да"
-				popupContent="popup__container_content_confirmation"
-				onClose={closeAllPopups}
-			/>
+				<PopupWithForm
+					name="add-card"
+					title="Новое место"
+					button="Создать"
+					isOpen={isAddPlacePopupOpen}
+					onClose={closeAllPopups}
+				>
+					{" "}
+					<InputText placeholder="Описание места" />
+					<InputLink placeholder="Ссылка на картинку" />
+				</PopupWithForm>
+				<PopupWithForm
+					name="confirmation"
+					title="Вы уверены?"
+					button="Да"
+					popupContent="popup__container_content_confirmation"
+					onClose={closeAllPopups}
+				/>
 
-			<PopupWithForm
-				name="edit-avatar"
-				title="Обновить аватар"
-				button="Сохранить"
-				popupContent="popup__container_content_edit-avatar"
-				isOpen={isEditAvatarPopupOpen}
-				onClose={closeAllPopups}
-			>
-				{" "}
-				<InputLink placeholder="Ссылка на картинку" />{" "}
-			</PopupWithForm>
+				<PopupWithForm
+					name="edit-avatar"
+					title="Обновить аватар"
+					button="Сохранить"
+					popupContent="popup__container_content_edit-avatar"
+					isOpen={isEditAvatarPopupOpen}
+					onClose={closeAllPopups}
+				>
+					{" "}
+					<InputLink placeholder="Ссылка на картинку" />{" "}
+				</PopupWithForm>
 
-			<ImagePopup card={selectedCard} onClose={closeAllPopups} />
-		</div>
+				<ImagePopup card={selectedCard} onClose={closeAllPopups} />
+			</div>
+		</userContext.Provider>
 	);
 }
 

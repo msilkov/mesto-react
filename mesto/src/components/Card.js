@@ -1,4 +1,17 @@
+import { useContext } from "react";
+import { userContext } from "./contexts/CurrentUserContext.js";
+
 export default function Card(props) {
+	const currentUser = useContext(userContext);
+
+	const isOwn = props.card.ownerId === currentUser._id;
+	console.log(currentUser._id)
+	console.log(props.card.ownerId)
+	console.log(isOwn)
+	const cardDeleteButtonClassName = (
+		`card__remove-btn ${isOwn ? 'card__remove-btn_type_visible' : 'card__remove-btn_type_hidden'}`
+	); 
+
 	function handleClick() {
 		props.onClick(props.card);
 	}
@@ -24,7 +37,7 @@ export default function Card(props) {
 					</p>
 				</div>
 			</div>
-			<button type="button" className="card__remove-btn" />
+			<button type="button" className={cardDeleteButtonClassName} />
 		</article>
 	);
 }

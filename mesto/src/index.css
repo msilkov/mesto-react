@@ -50,5 +50,7 @@
 @import url(./blocks/card/__like-counter/card__like-counter.css);
 @import url(./blocks/card/__like-counter/_active/card__like-counter_active.css);
 @import url(./blocks/card/__remove-btn/card__remove-btn.css);
+@import url(./blocks/card/__remove-btn/_type/card__remove-btn_type_visible.css);
+@import url(./blocks/card/__remove-btn/_type/card__remove-btn_type_hidden.css);
 @import url(./blocks/footer/footer.css);
 @import url(./blocks/footer/__copyright/footer__copyright.css);
