@@ -13,7 +13,7 @@ export default function Main(props) {
 			.then((cards) => {
 				setCards(
 					cards.map((card) => ({
-						id: card._id,
+						_id: card._id,
 						likes: card.likes,
 						name: card.name,
 						link: card.link,
@@ -26,6 +26,17 @@ export default function Main(props) {
 			});
 	}, []);
 
+	function handleCardLike(card) {
+		const isOwnLiked = card.likes.some((i) => i._id === currentUser._id);
+		api
+			.toggleCardLikeStatus(card._id, isOwnLiked ? "DELETE" : "PUT")
+			.then((newCard) => {
+				setCards((state) =>
+					state.map((c) => (c._id === card._id ? newCard : c))
+				);
+			});
+	}
+
 	return (
 		<main className="content section">
 			<section
@@ -33,7 +44,11 @@ export default function Main(props) {
 				aria-label="Секция профиль пользователя"
 			>
 				<div className="profile__avatar-wrapper">
-					<img src={currentUser.avatar} alt="аватарка" className="profile__avatar" />
+					<img
+						src={currentUser.avatar}
+						alt="аватарка"
+						className="profile__avatar"
+					/>
 					<div className="profile__avatar-overlay">
 						<button
 							type="button"
@@ -64,7 +79,12 @@ export default function Main(props) {
 				aria-label="Блок с фотокарточками"
 			>
 				{cards.map((card) => (
-					<Card key={card.id} card={card} onClick={props.onCardClick} />
+					<Card
+						key={card._id}
+						card={card}
+						onClick={props.onCardClick}
+						onCardLike={handleCardLike}
+					/>
 				))}
 			</section>
 		</main>
