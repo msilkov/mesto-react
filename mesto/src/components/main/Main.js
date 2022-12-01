@@ -11,15 +11,7 @@ export default function Main(props) {
 		api
 			.getCards()
 			.then((cards) => {
-				setCards(
-					cards.map((card) => ({
-						_id: card._id,
-						likes: card.likes,
-						name: card.name,
-						link: card.link,
-						ownerId: card.owner._id,
-					}))
-				);
+				setCards(cards);
 			})
 			.catch((err) => {
 				console.log(`Ошибка при загрузке данных с сервера: ${err}`);
@@ -31,9 +23,24 @@ export default function Main(props) {
 		api
 			.toggleCardLikeStatus(card._id, isOwnLiked ? "DELETE" : "PUT")
 			.then((newCard) => {
-				setCards((state) =>
-					state.map((c) => (c._id === card._id ? newCard : c))
+				setCards(
+					cards.map((oldCard) => (oldCard._id === card._id ? newCard : oldCard))
 				);
+			})
+			.catch((err) => {
+				console.log(`Ошибка при загрузке данных с сервера: ${err}`);
+			});
+	}
+
+	function handleCardDelete(card) {
+		api
+			.deleteCard(card._id)
+			.then(() => {
+				const updCards = cards.filter((oldCard) => oldCard._id !== card._id);
+				setCards(updCards);
+			})
+			.catch((err) => {
+				console.log(`Ошибка при загрузке данных с сервера: ${err}`);
 			});
 	}
 
@@ -84,6 +91,7 @@ export default function Main(props) {
 						card={card}
 						onClick={props.onCardClick}
 						onCardLike={handleCardLike}
+						onCardDelete={handleCardDelete}
 					/>
 				))}
 			</section>

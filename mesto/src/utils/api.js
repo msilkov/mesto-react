@@ -42,6 +42,7 @@ class Api {
 		return this._request(`${this._baseUrl}/cards/${cardId}`, {
 			method: "DELETE",
 			headers: this._headers,
+			body: JSON.stringify({ cardId }),
 		});
 	}
 
@@ -70,7 +71,7 @@ class Api {
 	}
 }
 
-const reactApi = new Api({
+const api = new Api({
 	baseUrl: baseUrl,
 	headers: {
 		authorization: token,
@@ -78,4 +79,4 @@ const reactApi = new Api({
 	},
 });
 
-export default reactApi;
+export default api;
