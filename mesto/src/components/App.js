@@ -17,6 +17,8 @@ function App() {
 
 	const [selectedCard, setSelectedCard] = useState(null);
 
+	const [currentUser, setcurrentUser] = useState(null);
+
 	function closeAllPopups() {
 		setEditProfilePopupOpen(false);
 		setAddPlacePopupOpen(false);
