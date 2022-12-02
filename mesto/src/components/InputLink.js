@@ -1,4 +1,4 @@
-export default function InputLink (props) {
+export default function InputLink(props) {
 	return (
 		<fieldset className="popup__input-group">
 			<input
@@ -10,6 +10,8 @@ export default function InputLink (props) {
 				pattern="https?://.+"
 				required=""
 				ref={props.link}
+				value={props.value}
+				onChange={props.onChange}
 			/>
 			<span
 				id="img-input-error"

@@ -5,12 +5,11 @@ import Main from "./main/Main.js";
 import Footer from "./footer/Footer.js";
 import PopupWithForm from "./PopupWithForm.js";
 import ImagePopup from "./ImagePopup.js";
-import InputText from "./InputText.js";
-import InputLink from "./InputLink.js";
 import api from "../utils/api.js";
 import { userContext } from "./contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup.js";
+import AddPlacePopup from "./AddPlacePopup.js";
 
 function App() {
 	const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -33,6 +32,45 @@ function App() {
 				console.log(`Ошибка при загрузке данных с сервера: ${err}`);
 			});
 	}, []);
+
+	const [cards, setCards] = useState([]);
+
+	useEffect(() => {
+		api
+			.getCards()
+			.then((cards) => {
+				setCards(cards);
+			})
+			.catch((err) => {
+				console.log(`Ошибка при загрузке карточек с сервера: ${err}`);
+			});
+	}, []);
+
+	function handleCardLike(card) {
+		const isOwnLiked = card.likes.some((i) => i._id === currentUser._id);
+		api
+			.toggleCardLikeStatus(card._id, isOwnLiked ? "DELETE" : "PUT")
+			.then((newCard) => {
+				setCards(
+					cards.map((oldCard) => (oldCard._id === card._id ? newCard : oldCard))
+				);
+			})
+			.catch((err) => {
+				console.log(`Ошибка при загрузке данных с сервера: ${err}`);
+			});
+	}
+
+	function handleCardDelete(card) {
+		api
+			.deleteCard(card._id)
+			.then(() => {
+				const updCards = cards.filter((oldCard) => oldCard._id !== card._id);
+				setCards(updCards);
+			})
+			.catch((err) => {
+				console.log(`Ошибка при загрузке данных с сервера: ${err}`);
+			});
+	}
 
 	function closeAllPopups() {
 		setEditProfilePopupOpen(false);
@@ -81,6 +119,18 @@ function App() {
 			});
 	}
 
+	function handleAddPlaceSubmit(CardData) {
+		api
+			.addCard(CardData)
+			.then((newCard) => {
+				setCards([newCard, ...cards]);
+				closeAllPopups();
+			})
+			.catch((err) => {
+				console.log(`Ошибка при загрузке карточек с сервера: ${err}`);
+			});
+	}
+
 	return (
 		<userContext.Provider value={currentUser}>
 			<div className="page__content">
@@ -90,6 +140,9 @@ function App() {
 					onAddPlace={handleAddPlaceClick}
 					onEditAvatar={handleEditAvatarClick}
 					onCardClick={handleCardClick}
+					cards={cards}
+					onCardLike={handleCardLike}
+					onCardDelete={handleCardDelete}
 				/>
 				<Footer />
 
@@ -105,16 +158,12 @@ function App() {
 					onUpdateAvatar={handleUpdateUserAvatar}
 				/>
 
-				<PopupWithForm
-					name="add-card"
-					title="Новое место"
-					button="Создать"
+				<AddPlacePopup
 					isOpen={isAddPlacePopupOpen}
 					onClose={closeAllPopups}
-				>
-					<InputText placeholder="Описание места" />
-					<InputLink placeholder="Ссылка на картинку" />
-				</PopupWithForm>
+					onAddPlace={handleAddPlaceSubmit}
+				/>
+
 				<PopupWithForm
 					name="confirmation"
 					title="Вы уверены?"

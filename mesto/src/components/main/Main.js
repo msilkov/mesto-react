@@ -5,44 +5,6 @@ import { userContext } from "../contexts/CurrentUserContext.js";
 
 export default function Main(props) {
 	const currentUser = useContext(userContext);
-	const [cards, setCards] = useState([]);
-
-	useEffect(() => {
-		api
-			.getCards()
-			.then((cards) => {
-				setCards(cards);
-			})
-			.catch((err) => {
-				console.log(`Ошибка при загрузке данных с сервера: ${err}`);
-			});
-	}, []);
-
-	function handleCardLike(card) {
-		const isOwnLiked = card.likes.some((i) => i._id === currentUser._id);
-		api
-			.toggleCardLikeStatus(card._id, isOwnLiked ? "DELETE" : "PUT")
-			.then((newCard) => {
-				setCards(
-					cards.map((oldCard) => (oldCard._id === card._id ? newCard : oldCard))
-				);
-			})
-			.catch((err) => {
-				console.log(`Ошибка при загрузке данных с сервера: ${err}`);
-			});
-	}
-
-	function handleCardDelete(card) {
-		api
-			.deleteCard(card._id)
-			.then(() => {
-				const updCards = cards.filter((oldCard) => oldCard._id !== card._id);
-				setCards(updCards);
-			})
-			.catch((err) => {
-				console.log(`Ошибка при загрузке данных с сервера: ${err}`);
-			});
-	}
 
 	return (
 		<main className="content section">
@@ -85,13 +47,13 @@ export default function Main(props) {
 				className="cards-layout section section_size_narrow page__section"
 				aria-label="Блок с фотокарточками"
 			>
-				{cards.map((card) => (
+				{props.cards.map((card) => (
 					<Card
 						key={card._id}
 						card={card}
 						onClick={props.onCardClick}
-						onCardLike={handleCardLike}
-						onCardDelete={handleCardDelete}
+						onCardLike={props.onCardLike}
+						onCardDelete={props.onCardDelete}
 					/>
 				))}
 			</section>
