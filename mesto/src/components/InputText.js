@@ -7,10 +7,11 @@ export default function ImputText(props) {
 				name="name"
 				className="popup__input popup__input_type_img-title"
 				placeholder={props.placeholder}
-				defaultValue=""
 				minLength={2}
 				maxLength={30}
 				required=""
+				value={props.value}
+				onChange={props.onChange}
 			/>
 			<span
 				id="place-input-error"

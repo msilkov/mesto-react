@@ -9,6 +9,7 @@ import InputText from "./InputText.js";
 import InputLink from "./InputLink.js";
 import api from "../utils/api.js";
 import { userContext } from "./contexts/CurrentUserContext";
+import EditProfilePopup from "./EditProfilePopup.js";
 
 function App() {
 	const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -53,6 +54,19 @@ function App() {
 	function handleCardClick(selectedCard) {
 		setSelectedCard(selectedCard);
 	}
+	function handleUpdateUser(userInfo) {
+		console.log(userInfo);
+		api
+			.setUserInfo(userInfo)
+			.then((userData) => {
+				setCurrentUser(userData);
+				closeAllPopups();
+			})
+			.catch((err) => {
+				console.log(`Ошибка при загрузке данных с сервера: ${err}`);
+			});
+	}
+
 	return (
 		<userContext.Provider value={currentUser}>
 			<div className="page__content">
@@ -65,16 +79,11 @@ function App() {
 				/>
 				<Footer />
 
-				<PopupWithForm
-					name="edit-profile"
-					title="Редактировать профиль"
-					button="Сохранить"
+				<EditProfilePopup
 					isOpen={isEditProfilePopupOpen}
 					onClose={closeAllPopups}
-				>
-					<InputText placeholder="Ваше имя" />
-					<InputText placeholder="Чем вы занимаетесь?" />
-				</PopupWithForm>
+					onUpdateUser={handleUpdateUser}
+				/>
 
 				<PopupWithForm
 					name="add-card"
@@ -83,7 +92,6 @@ function App() {
 					isOpen={isAddPlacePopupOpen}
 					onClose={closeAllPopups}
 				>
-					{" "}
 					<InputText placeholder="Описание места" />
 					<InputLink placeholder="Ссылка на картинку" />
 				</PopupWithForm>
