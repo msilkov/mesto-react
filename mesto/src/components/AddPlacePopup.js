@@ -2,7 +2,7 @@ import PopupWithForm from "./PopupWithForm.js";
 import InputText from "./InputText.js";
 import InputLink from "./InputLink.js";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function AddPlacePopup(props) {
 	function handleFormSubmit(e) {

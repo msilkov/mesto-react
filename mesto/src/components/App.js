@@ -22,6 +22,8 @@ function App() {
 
 	const [currentUser, setCurrentUser] = useState({});
 
+	const [cards, setCards] = useState([]);
+
 	useEffect(() => {
 		api
 			.getUserInfo()
@@ -32,8 +34,6 @@ function App() {
 				console.log(`Ошибка при загрузке данных с сервера: ${err}`);
 			});
 	}, []);
-
-	const [cards, setCards] = useState([]);
 
 	useEffect(() => {
 		api
