@@ -10,6 +10,7 @@ import InputLink from "./InputLink.js";
 import api from "../utils/api.js";
 import { userContext } from "./contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup.js";
+import EditAvatarPopup from "./EditAvatarPopup.js";
 
 function App() {
 	const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -51,11 +52,12 @@ function App() {
 	function handleEditAvatarClick() {
 		setEditAvatarPopupOpen(!isEditAvatarPopupOpen);
 	}
+
 	function handleCardClick(selectedCard) {
 		setSelectedCard(selectedCard);
 	}
+
 	function handleUpdateUser(userInfo) {
-		console.log(userInfo);
 		api
 			.setUserInfo(userInfo)
 			.then((userData) => {
@@ -63,7 +65,19 @@ function App() {
 				closeAllPopups();
 			})
 			.catch((err) => {
-				console.log(`Ошибка при загрузке данных с сервера: ${err}`);
+				console.log(`Ошибка при загрузке данных пользователя: ${err}`);
+			});
+	}
+
+	function handleUpdateUserAvatar(avatarInfo) {
+		api
+			.setAvatar(avatarInfo)
+			.then((userData) => {
+				setCurrentUser(userData);
+				closeAllPopups();
+			})
+			.catch((err) => {
+				console.log(`Ошибка при загрузке аватара пользователя: ${err}`);
 			});
 	}
 
@@ -85,6 +99,12 @@ function App() {
 					onUpdateUser={handleUpdateUser}
 				/>
 
+				<EditAvatarPopup
+					isOpen={isEditAvatarPopupOpen}
+					onClose={closeAllPopups}
+					onUpdateAvatar={handleUpdateUserAvatar}
+				/>
+
 				<PopupWithForm
 					name="add-card"
 					title="Новое место"
@@ -102,18 +122,6 @@ function App() {
 					popupContent="popup__container_content_confirmation"
 					onClose={closeAllPopups}
 				/>
-
-				<PopupWithForm
-					name="edit-avatar"
-					title="Обновить аватар"
-					button="Сохранить"
-					popupContent="popup__container_content_edit-avatar"
-					isOpen={isEditAvatarPopupOpen}
-					onClose={closeAllPopups}
-				>
-					{" "}
-					<InputLink placeholder="Ссылка на картинку" />{" "}
-				</PopupWithForm>
 
 				<ImagePopup card={selectedCard} onClose={closeAllPopups} />
 			</div>

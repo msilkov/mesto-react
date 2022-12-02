@@ -17,8 +17,8 @@ export default function EditProfilePopup(props) {
 	const [description, setDescription] = useState(" ");
 
 	useEffect(() => {
-		setName(currentUser.name);
-		setDescription(currentUser.about);
+		setName(currentUser.name || "");
+		setDescription(currentUser.about || "");
 	}, [currentUser]);
 
 	function handleNameChange(e) {
