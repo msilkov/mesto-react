@@ -7,6 +7,7 @@ export default function PopupWithForm(props) {
 				props.isOpen ? "popup_opened" : ""
 			}`}
 			onClose={props.onClose}
+			isOpen={props.isOpen}
 		>
 			<div
 				className={

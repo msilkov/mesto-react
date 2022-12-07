@@ -7,6 +7,7 @@ export default function ImagePopup(props) {
 				props.isOpen ? "popup_opened" : ""
 			}`}
 			onClose={props.onClose}
+			isOpen={props.isOpen}
 		>
 			<div className="popup__container popup__container_content_image">
 				<img
