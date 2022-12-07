@@ -37,6 +37,7 @@ export default function AddPlacePopup(props) {
 			isOpen={props.isOpen}
 			onClose={props.onClose}
 			onSubmit={handleFormSubmit}
+			popupContainer="popup__container"
 		>
 			<InputText
 				id="place-input"

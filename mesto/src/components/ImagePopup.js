@@ -1,9 +1,12 @@
+import Popup from "./Popup";
+
 export default function ImagePopup(props) {
 	return (
-		<article
-			className={`popup popup_type_zoom-img ${
-				props.card ? "popup_opened" : ""
+		<Popup
+			className={`popup popup_type_${props.name} ${
+				props.isOpen ? "popup_opened" : ""
 			}`}
+			onClose={props.onClose}
 		>
 			<div className="popup__container popup__container_content_image">
 				<img
@@ -18,6 +21,6 @@ export default function ImagePopup(props) {
 					className="popup__close-btn"
 				/>
 			</div>
-		</article>
+		</Popup>
 	);
 }

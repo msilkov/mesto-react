@@ -17,6 +17,8 @@ function App() {
 
 	const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
 
+	const [isImagePopupOpen, setImagePopupOpen] = useState(false);
+
 	const [selectedCard, setSelectedCard] = useState(null);
 
 	const [currentUser, setCurrentUser] = useState({});
@@ -70,11 +72,16 @@ function App() {
 			});
 	}
 
+	function clearCardDelay() {
+		setSelectedCard(null);
+	}
+
 	function closeAllPopups() {
+		setImagePopupOpen(false);
 		setEditProfilePopupOpen(false);
 		setAddPlacePopupOpen(false);
 		setEditAvatarPopupOpen(false);
-		setSelectedCard(null);
+		setTimeout(clearCardDelay, 1000);
 	}
 
 	function handleEditProfileClick() {
@@ -91,6 +98,7 @@ function App() {
 
 	function handleCardClick(selectedCard) {
 		setSelectedCard(selectedCard);
+		setImagePopupOpen(true);
 	}
 
 	function handleUpdateUser(userInfo) {
@@ -166,11 +174,17 @@ function App() {
 					name="confirmation"
 					title="Вы уверены?"
 					button="Да"
+					popupContainer="popup__container"
 					popupContent="popup__container_content_confirmation"
 					onClose={closeAllPopups}
 				/>
 
-				<ImagePopup card={selectedCard} onClose={closeAllPopups} />
+				<ImagePopup
+					name="zoom-img"
+					card={selectedCard}
+					onClose={closeAllPopups}
+					isOpen={isImagePopupOpen}
+				/>
 			</div>
 		</userContext.Provider>
 	);

@@ -6,7 +6,6 @@ export default function EditAvatarPopup(props) {
 	const inputLink = useRef("");
 	const [link, setLink] = useState("");
 
-
 	useEffect(() => {
 		setLink("");
 	}, [props.isOpen]);
@@ -27,6 +26,7 @@ export default function EditAvatarPopup(props) {
 			name="edit-avatar"
 			title="Обновить аватар"
 			button="Сохранить"
+			popupContainer="popup__container"
 			popupContent="popup__container_content_edit-avatar"
 			isOpen={props.isOpen}
 			onClose={props.onClose}

@@ -1,11 +1,20 @@
+import Popup from "./Popup";
+
 export default function PopupWithForm(props) {
 	return (
-		<article
+		<Popup
 			className={`popup popup_type_${props.name} ${
 				props.isOpen ? "popup_opened" : ""
 			}`}
+			onClose={props.onClose}
 		>
-			<div className={`popup__container ${props.popupContent}`}>
+			<div
+				className={
+					props.popupContent
+						? `${props.popupContainer} ${props.popupContent}`
+						: props.popupContainer
+				}
+			>
 				<h2 className="popup__title">{props.title}</h2>
 				<form
 					name={props.name}
@@ -23,6 +32,6 @@ export default function PopupWithForm(props) {
 					className="popup__close-btn"
 				/>
 			</div>
-		</article>
+		</Popup>
 	);
 }
