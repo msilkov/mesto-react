@@ -2,7 +2,7 @@ import PopupWithForm from "./PopupWithForm.js";
 import InputText from "./InputText.js";
 import InputLink from "./InputLink.js";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function AddPlacePopup(props) {
 	function handleFormSubmit(e) {
@@ -15,6 +15,11 @@ export default function AddPlacePopup(props) {
 
 	const [place, setPlace] = useState("");
 	const [placeLink, setPlaceLink] = useState("");
+
+	useEffect(() => {
+		setPlace("");
+		setPlaceLink("");
+	}, [props.isOpen]);
 
 	function handlePlaceChange(e) {
 		setPlace(e.target.value);
@@ -34,13 +39,26 @@ export default function AddPlacePopup(props) {
 			onSubmit={handleFormSubmit}
 		>
 			<InputText
+				id="place-input"
+				type="text"
+				name="name"
+				className="popup__input popup__input_type_img-title"
 				placeholder="Описание места"
 				value={place}
+				minLength={2}
+				maxLength={30}
+				required={true}
 				onChange={handlePlaceChange}
 			/>
 			<InputLink
+				id="img-input"
+				type="url"
+				name="link"
+				className="popup__input popup__input_type_img-link"
 				placeholder="Ссылка на картинку"
 				value={placeLink}
+				pattern="https?://.+"
+				required={true}
 				onChange={handlePlaceLinkChange}
 			/>
 		</PopupWithForm>

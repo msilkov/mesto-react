@@ -1,7 +1,6 @@
-import { useState, useEffect, useContext } from "react";
-import api from "../../utils/api.js";
+import { useContext } from "react";
 import Card from "../Card.js";
-import { userContext } from "../contexts/CurrentUserContext.js";
+import { userContext } from "../../contexts/CurrentUserContext.js";
 
 export default function Main(props) {
 	const currentUser = useContext(userContext);

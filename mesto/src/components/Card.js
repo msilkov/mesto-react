@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { userContext } from "./contexts/CurrentUserContext.js";
+import { userContext } from "../contexts/CurrentUserContext.js";
 
 export default function Card(props) {
 	const currentUser = useContext(userContext);
@@ -20,11 +20,11 @@ export default function Card(props) {
 	}
 
 	function handleLikeClick() {
-		props.onCardLike(props.card);
+		props.onCardLike(props.card, isOwnLiked);
 	}
 
-	function handleDeleteClick(){
-		props.onCardDelete(props.card)
+	function handleDeleteClick() {
+		props.onCardDelete(props.card);
 	}
 
 	return (
@@ -32,7 +32,7 @@ export default function Card(props) {
 			<img
 				onClick={handleImgClick}
 				src={props.card.link}
-				alt={props.card.alt ? props.card.alt : props.card.name}
+				alt={props.card.alt || props.card.name}
 				className="card__image"
 			/>
 			<div className="card__description">
@@ -48,11 +48,15 @@ export default function Card(props) {
 							props.card.likes.length ? " card__like-counter_active" : ""
 						}`}
 					>
-						{props.card.likes.length ? props.card.likes.length : 0}
+						{props.card.likes.length}
 					</p>
 				</div>
 			</div>
-			<button onClick={handleDeleteClick} type="button" className={cardDeleteButtonClassName} />
+			<button
+				onClick={handleDeleteClick}
+				type="button"
+				className={cardDeleteButtonClassName}
+			/>
 		</article>
 	);
 }

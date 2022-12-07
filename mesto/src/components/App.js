@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import "../index.css";
 import Header from "./header/Header.js";
 import Main from "./main/Main.js";
 import Footer from "./footer/Footer.js";
 import PopupWithForm from "./PopupWithForm.js";
 import ImagePopup from "./ImagePopup.js";
 import api from "../utils/api.js";
-import { userContext } from "./contexts/CurrentUserContext";
+import { userContext } from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup.js";
 import AddPlacePopup from "./AddPlacePopup.js";
@@ -46,10 +45,9 @@ function App() {
 			});
 	}, []);
 
-	function handleCardLike(card) {
-		const isOwnLiked = card.likes.some((i) => i._id === currentUser._id);
+	function handleCardLike(card, isOwnLiked) {
 		api
-			.toggleCardLikeStatus(card._id, isOwnLiked ? "DELETE" : "PUT")
+			.toggleCardLikeStatus(card._id, isOwnLiked)
 			.then((newCard) => {
 				setCards(
 					cards.map((oldCard) => (oldCard._id === card._id ? newCard : oldCard))
@@ -80,15 +78,15 @@ function App() {
 	}
 
 	function handleEditProfileClick() {
-		setEditProfilePopupOpen(!isEditProfilePopupOpen);
+		setEditProfilePopupOpen(true);
 	}
 
 	function handleAddPlaceClick() {
-		setAddPlacePopupOpen(!isAddPlacePopupOpen);
+		setAddPlacePopupOpen(true);
 	}
 
 	function handleEditAvatarClick() {
-		setEditAvatarPopupOpen(!isEditAvatarPopupOpen);
+		setEditAvatarPopupOpen(true);
 	}
 
 	function handleCardClick(selectedCard) {

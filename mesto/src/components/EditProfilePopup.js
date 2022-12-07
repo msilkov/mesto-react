@@ -1,7 +1,7 @@
 import PopupWithForm from "./PopupWithForm.js";
 import InputText from "./InputText.js";
 import { useState, useContext, useEffect } from "react";
-import { userContext } from "./contexts/CurrentUserContext";
+import { userContext } from "../contexts/CurrentUserContext";
 
 export default function EditProfilePopup(props) {
 	const currentUser = useContext(userContext);
@@ -19,7 +19,7 @@ export default function EditProfilePopup(props) {
 	useEffect(() => {
 		setName(currentUser.name || "");
 		setDescription(currentUser.about || "");
-	}, [currentUser]);
+	}, [currentUser, props.isOpen]);
 
 	function handleNameChange(e) {
 		setName(e.target.value);
@@ -39,13 +39,27 @@ export default function EditProfilePopup(props) {
 			onSubmit={handleFormSubmit}
 		>
 			<InputText
+				id="name-input"
+				type="text"
+				name="name"
+				className="popup__input popup__input_type_name"
 				placeholder="Ваше имя"
 				value={name}
+				minLength={2}
+				maxLength={40}
+				required={true}
 				onChange={handleNameChange}
 			/>
 			<InputText
-				placeholder="Чем вы занимаетесь?"
+				id="prof-input"
+				type="text"
+				name="about"
+				className="popup__input popup__input_type_profession"
+				placeholder="Ваша профессия"
 				value={description}
+				minLength={2}
+				maxLength={200}
+				required={true}
 				onChange={handleDescChange}
 			/>
 		</PopupWithForm>

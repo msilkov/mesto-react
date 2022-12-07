@@ -62,9 +62,9 @@ class Api {
 		});
 	}
 
-	toggleCardLikeStatus(cardId, method) {
+	toggleCardLikeStatus(cardId, isOwnLiked) {
 		return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
-			method: `${method}`,
+			method: `${isOwnLiked ? "DELETE" : "PUT"}`,
 			headers: this._headers,
 			body: JSON.stringify(),
 		});

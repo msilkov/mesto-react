@@ -1,9 +1,15 @@
 import PopupWithForm from "./PopupWithForm.js";
 import InputLink from "./InputLink.js";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function EditAvatarPopup(props) {
 	const inputLink = useRef("");
+	const [link, setLink] = useState("");
+
+
+	useEffect(() => {
+		setLink("");
+	}, [props.isOpen]);
 
 	function handleFormSubmit(e) {
 		e.preventDefault();
@@ -11,6 +17,9 @@ export default function EditAvatarPopup(props) {
 			avatar: inputLink.current.value,
 		});
 		inputLink.current.value = "";
+	}
+	function handlePlaceLinkChange(e) {
+		setLink(e.target.value);
 	}
 
 	return (
@@ -23,7 +32,18 @@ export default function EditAvatarPopup(props) {
 			onClose={props.onClose}
 			onSubmit={handleFormSubmit}
 		>
-			<InputLink placeholder="Ссылка на картинку" link={inputLink} />
+			<InputLink
+				id="owner-avatar"
+				type="url"
+				name="avatar"
+				className="popup__input popup__input_type_img-link"
+				placeholder="Ссылка на картинку"
+				ref={inputLink}
+				value={link}
+				pattern="https?://.+"
+				required={true}
+				onChange={handlePlaceLinkChange}
+			/>
 		</PopupWithForm>
 	);
 }
